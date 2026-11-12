@@ -10,6 +10,7 @@
   const safe = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const render = () => {
     const entries = [...cart.values()];
+    const count=document.getElementById('orderCount');if(count)count.textContent=entries.reduce((n,p)=>n+p.qty,0)+' items';
     document.getElementById('cartItems').innerHTML = entries.length ? entries.map(p => `<div class="cart-line"><div class="cart-line-info"><strong>${safe(p.name)}</strong><small>${fmt(p.price)} each</small></div><div class="qty-controls"><button type="button" data-edit="${p.id}" data-delta="-1" aria-label="Remove one">−</button><span>${p.qty}</span><button type="button" data-edit="${p.id}" data-delta="1" aria-label="Add one">+</button></div><b>${fmt(p.price*p.qty)}</b></div>`).join('') : '<p class="muted">Your cart is empty.</p>';
     const subtotal = entries.reduce((sum,p) => sum + p.price*p.qty, 0);
     const total = Math.max(0, subtotal-cents(discount.value));
@@ -32,7 +33,8 @@
     const p=cart.get(Number(btn.dataset.edit));if(!p)return;
     p.qty=Math.min(p.stock,p.qty+Number(btn.dataset.delta));if(p.qty<1)cart.delete(p.id);render();
   });
-  const filter = () => {const q=search.value.trim().toLowerCase(),cat=catFilter.value;for(const p of products)p.hidden=!(p.dataset.name.toLowerCase().includes(q)||p.dataset.sku.toLowerCase().includes(q))||(cat!==''&&p.dataset.category!==cat);};
+  const filter = () => {const q=search.value.trim().toLowerCase(),cat=catFilter.value;let shown=0;for(const p of products){p.hidden=!(p.dataset.name.toLowerCase().includes(q)||p.dataset.sku.toLowerCase().includes(q))||(cat!==''&&p.dataset.category!==cat);if(!p.hidden)shown++;}const empty=document.getElementById('noResults');if(empty)empty.hidden=shown!==0||products.length===0;document.querySelectorAll('.category-chip').forEach(b=>b.classList.toggle('selected',b.dataset.category===cat));};
+  document.querySelectorAll('.category-chip').forEach(b=>b.addEventListener('click',()=>{catFilter.value=b.dataset.category;filter();}));
   search.addEventListener('input',filter);catFilter.addEventListener('change',filter);
   discount.addEventListener('input',render);paid.addEventListener('input',render);
   document.getElementById('checkoutForm').addEventListener('submit',event => {render();if(document.getElementById('checkoutBtn').disabled)event.preventDefault();});
