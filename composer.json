@@ -1,0 +1,1 @@
+{"name":"custom/pos","description":"Responsive PHP inventory and point-of-sale application","require":{"php":"^8.5","ext-pdo":"*","ext-pdo_mysql":"*","ext-mbstring":"*","ext-fileinfo":"*"}}
