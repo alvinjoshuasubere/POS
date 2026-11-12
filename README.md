@@ -4,7 +4,7 @@ A responsive, lightweight point-of-sale and inventory app built for **PHP 8.5.12
 
 ## Features
 
-- Admin and cashier login, password hashing, session renewal and CSRF checks
+- Username-only admin and cashier login, password hashing, session renewal and CSRF checks
 - Point of sale with product search, category filter, cart, discount, cash/GCash/card/other payment, change calculation
 - Database transactions and row locking to prevent overselling inventory
 - Printable sale receipts, recent transactions and daily sales dashboard
@@ -34,7 +34,7 @@ PHP 8.6 was only in release-candidate status on November 12, 2026, so the projec
 
 2. Upload the project to your PHP 8.5.12+ web host. If your web host is running an older PHP version, choose PHP 8.5 in your hosting panel or upgrade your server first. Enable HTTPS.
 3. Copy `config.php` to `config.local.php`. Set `db_host`, `db_name`, `db_user`, `db_pass` and, if necessary, `db_port`. Do not commit `config.local.php`. You can alternatively set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASS` environment variables.
-4. Visit `https://your-domain/install.php` once to create the database tables and first admin account. Make your admin password at least 12 characters.
+4. Visit `https://your-domain/install.php` once to create the database tables and first admin account. Choose a username and an admin password of at least 6 characters.
 5. **Immediately remove or restrict `install.php`** after successful installation. For tighter privileges, revoke schema-change privileges (`CREATE`, `ALTER`, `INDEX`, `REFERENCES`) from the app database user after setup.
 6. Sign in at `index.php`. Add product categories and products, then stock quantities in Inventory. Go to Appearance to upload a logo or change your brand color. Use POS to complete your first sale.
 
@@ -55,6 +55,7 @@ PHP 8.6 was only in release-candidate status on November 12, 2026, so the projec
 - `config.php`: example database configuration; edit local untracked copy
 - `assets/style.css`: responsive design
 - `assets/pos.js`: interactive checkout cart
+- `migrations/001_username_login.sql`: one-time migration for existing installations. Back up the database, run the migration, then use usernames `user<ID>` (e.g. `user1`) for existing accounts until you change them manually in MySQL. Password hashes remain unchanged.
 
 ## Local checks
 
