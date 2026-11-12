@@ -29,3 +29,14 @@ body{background:var(--bg)}.sidebar{background:#fff;border-right:1px solid var(--
 .shell{align-items:stretch}
 .content{margin:0 auto;align-self:flex-start;min-height:100vh}
 @media(max-width:780px){.content{min-height:0;margin:0 auto}}
+
+/* Visible staff creation form and product photos. */
+.staff-layout{display:grid;grid-template-columns:minmax(290px,390px) minmax(0,1fr);gap:20px;align-items:start}
+.staff-form{border:2px solid color-mix(in srgb,var(--primary) 23%,var(--line));box-shadow:0 8px 24px #1d2b4210}
+.staff-form h2{margin-bottom:7px}.staff-form .muted{margin-top:0}
+.product-photo{width:100%;height:104px;object-fit:cover;border-radius:12px;background:#f0f3f9;margin-bottom:2px}
+.product:has(.product-photo){min-height:230px}.product:has(.product-photo) strong{margin-top:2px}
+.inventory-thumb{width:44px;height:44px;object-fit:cover;border-radius:9px;float:left;margin-right:10px}
+.product-preview{display:block;width:130px;height:100px;object-fit:cover;border-radius:12px;margin-bottom:14px}
+@media(max-width:900px){.staff-layout{grid-template-columns:1fr}}
+@media(max-width:580px){.product-photo{height:88px}.product:has(.product-photo){min-height:216px}}

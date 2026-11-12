@@ -60,3 +60,11 @@ PHP 8.6 was only in release-candidate status on November 12, 2026, so the projec
 ## Local checks
 
 Run `php -l index.php && php -l bootstrap.php && php -l install.php`. Full checkout testing requires a PHP 8.5 server connected to MySQL.
+
+## Product pictures and staff
+
+Admins can add staff from **Staff**. The Add staff user form appears first, followed by the account list. Passwords must have at least 6 characters.
+
+Admins can upload a PNG, JPG or WebP picture (maximum 2 MB) when creating or editing products in **Inventory**. The POS cards show these pictures. The uploads folder must be writable and block script execution.
+
+**Existing installations:** back up the database and run `migrations/002_product_images.sql` once before using product pictures. New installations already have the image column in `schema.sql`.
